@@ -1,5 +1,20 @@
-<script>
-    if (!localStorage.getItem("isAuthenticated")) {
-        window.location.href = "login.html";
-    }
-</script>
+<!-- dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Pavan Agri Solutions</title>
+    <link rel="stylesheet" href="styles/dashboard.css">
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+        <button id="logoutBtn">Logout</button>
+    </header>
+    <div id="dashboard-content">
+        <p>Welcome to the Dashboard!</p>
+    </div>
+    <script src="scripts/auth.js"></script>
+</body>
+</html>
