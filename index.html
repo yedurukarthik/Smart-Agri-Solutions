@@ -1,22 +1,34 @@
+<!-- index.html (Dashboard Page) -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Dashboard - Pavan Agri Solutions</title>
     <link rel="stylesheet" href="styles/dashboard.css">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Pavan Agri Solutions</h1>
-        <button id="logoutBtn">Logout</button>
-        <h2>Dashboard</h2>
+        <button id="logoutButton">Logout</button>
+    </header>
+    <nav>
         <ul>
             <li><a href="farms.html">Farms</a></li>
             <li><a href="crops.html">Crops</a></li>
             <li><a href="resources.html">Resources</a></li>
+            <li><a href="reports.html">Reports</a></li>
         </ul>
-    </div>
+    </nav>
+    <main>
+        <h2>Dashboard</h2>
+        <div class="stats">
+            <div>Total Farms: <span id="totalFarms">12</span></div>
+            <div>Total Crops: <span id="totalCrops">8</span></div>
+            <div>Active Farmers: <span id="activeFarmers">34</span></div>
+            <div>Reports Generated: <span id="reportsGenerated">15</span></div>
+        </div>
+    </main>
     <script src="scripts/main.js"></script>
 </body>
 </html>
