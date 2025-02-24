@@ -1,37 +1,52 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const cropsTableBody = document.getElementById("cropsTableBody");
+document.addEventListener("DOMContentLoaded", function () {
+    const cropForm = document.getElementById("cropForm");
+    const cropTableBody = document.getElementById("cropTableBody");
 
-    const cropsData = JSON.parse(localStorage.getItem("crops")) || [
-        { name: "Rice", density: "2000", plants: "5000", variety: "IR-64", date: "2024-01-10", days: "45" }
-    ];
-
-    function renderCrops() {
-        cropsTableBody.innerHTML = "";
-        cropsData.forEach((crop, index) => {
-            const row = `<tr>
-                <td>${crop.name}</td>
-                <td>${crop.density}</td>
-                <td>${crop.plants}</td>
-                <td>${crop.variety}</td>
-                <td>${crop.date}</td>
-                <td>${crop.days}</td>
-                <td><button onclick="deleteCrop(${index})">Delete</button></td>
-            </tr>`;
-            cropsTableBody.innerHTML += row;
-        });
-        localStorage.setItem("crops", JSON.stringify(cropsData));
+    function loadCrops() {
+        const crops = JSON.parse(localStorage.getItem("crops")) || [];
+        cropTableBody.innerHTML = "";
+        crops.forEach((crop, index) => addCropToTable(crop, index));
     }
 
-    document.getElementById("addCropBtn").addEventListener("click", function() {
-        const newCrop = { name: "New Crop", density: "0", plants: "0", variety: "Unknown", date: "2024-02-01", days: "0" };
-        cropsData.push(newCrop);
-        renderCrops();
+    function addCropToTable(crop, index) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${crop.name}</td>
+            <td>${crop.density}</td>
+            <td>${crop.plants}</td>
+            <td>${crop.variety}</td>
+            <td>${crop.date}</td>
+            <td>${crop.days}</td>
+            <td><button onclick="deleteCrop(${index})">❌ Delete</button></td>
+        `;
+        cropTableBody.appendChild(row);
+    }
+
+    cropForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const cropData = {
+            name: document.getElementById("cropName").value,
+            density: document.getElementById("density").value,
+            plants: document.getElementById("plants").value,
+            variety: document.getElementById("variety").value,
+            date: document.getElementById("plantedDate").value,
+            days: document.getElementById("days").value
+        };
+
+        let crops = JSON.parse(localStorage.getItem("crops")) || [];
+        crops.push(cropData);
+        localStorage.setItem("crops", JSON.stringify(crops));
+
+        loadCrops();
+        cropForm.reset();
     });
 
-    window.deleteCrop = function(index) {
-        cropsData.splice(index, 1);
-        renderCrops();
+    window.deleteCrop = function (index) {
+        let crops = JSON.parse(localStorage.getItem("crops")) || [];
+        crops.splice(index, 1);
+        localStorage.setItem("crops", JSON.stringify(crops));
+        loadCrops();
     };
 
-    renderCrops();
+    loadCrops();
 });
