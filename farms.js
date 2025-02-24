@@ -1,12 +1,10 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const farmsTableBody = document.getElementById("farmsTableBody");
-
-    const farmsData = JSON.parse(localStorage.getItem("farms")) || [
-        { name: "Farm-1", owner: "Pavan", location: "Devathapuram", area: "13.5 Acr", syNo: "120", link: "https://meebhoomi.ap.gov.in/" }
-    ];
+document.addEventListener("DOMContentLoaded", function () {
+    const farmTable = document.getElementById("farmTable");
+    const farmForm = document.getElementById("farmForm");
+    const farmsData = JSON.parse(localStorage.getItem("farms")) || [];
 
     function renderFarms() {
-        farmsTableBody.innerHTML = "";
+        farmTable.innerHTML = "";
         farmsData.forEach((farm, index) => {
             const row = `<tr>
                 <td>${farm.name}</td>
@@ -14,24 +12,34 @@ document.addEventListener("DOMContentLoaded", function() {
                 <td>${farm.location}</td>
                 <td>${farm.area}</td>
                 <td>${farm.syNo}</td>
-                <td><a href="${farm.link}" target="_blank">Meebhoomi</a></td>
+                <td><a href='https://meebhoomi.ap.gov.in/' target='_blank'>Meebhoomi</a></td>
                 <td><button onclick="deleteFarm(${index})">Delete</button></td>
             </tr>`;
-            farmsTableBody.innerHTML += row;
+            farmTable.innerHTML += row;
         });
-        localStorage.setItem("farms", JSON.stringify(farmsData));
     }
 
-    document.getElementById("addFarmBtn").addEventListener("click", function() {
-        const newFarm = { name: "New Farm", owner: "Owner", location: "Location", area: "0 Acr", syNo: "000", link: "https://meebhoomi.ap.gov.in/" };
+    function addFarm(event) {
+        event.preventDefault();
+        const newFarm = {
+            name: document.getElementById("farmName").value,
+            owner: document.getElementById("ownerName").value,
+            location: document.getElementById("location").value,
+            area: document.getElementById("area").value,
+            syNo: document.getElementById("syNo").value,
+        };
         farmsData.push(newFarm);
+        localStorage.setItem("farms", JSON.stringify(farmsData));
         renderFarms();
-    });
+        farmForm.reset();
+    }
 
-    window.deleteFarm = function(index) {
+    window.deleteFarm = function (index) {
         farmsData.splice(index, 1);
+        localStorage.setItem("farms", JSON.stringify(farmsData));
         renderFarms();
     };
 
+    farmForm.addEventListener("submit", addFarm);
     renderFarms();
 });
