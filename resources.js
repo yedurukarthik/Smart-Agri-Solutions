@@ -1,37 +1,52 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const resourcesTableBody = document.getElementById("resourcesTableBody");
+document.addEventListener("DOMContentLoaded", function () {
+    const resourceForm = document.getElementById("resourceForm");
+    const resourceTableBody = document.getElementById("resourceTableBody");
 
-    const resourcesData = JSON.parse(localStorage.getItem("resources")) || [
-        { name: "John", location: "Hyderabad", skill: "Plowing", type: "Labor", contact: "9876543210", rating: "5" }
-    ];
-
-    function renderResources() {
-        resourcesTableBody.innerHTML = "";
-        resourcesData.forEach((resource, index) => {
-            const row = `<tr>
-                <td>${resource.name}</td>
-                <td>${resource.location}</td>
-                <td>${resource.skill}</td>
-                <td>${resource.type}</td>
-                <td>${resource.contact}</td>
-                <td>${resource.rating}</td>
-                <td><button onclick="deleteResource(${index})">Delete</button></td>
-            </tr>`;
-            resourcesTableBody.innerHTML += row;
-        });
-        localStorage.setItem("resources", JSON.stringify(resourcesData));
+    function loadResources() {
+        const resources = JSON.parse(localStorage.getItem("resources")) || [];
+        resourceTableBody.innerHTML = "";
+        resources.forEach((resource, index) => addResourceToTable(resource, index));
     }
 
-    document.getElementById("addResourceBtn").addEventListener("click", function() {
-        const newResource = { name: "New Worker", location: "Unknown", skill: "Unknown", type: "Unknown", contact: "0000000000", rating: "0" };
-        resourcesData.push(newResource);
-        renderResources();
+    function addResourceToTable(resource, index) {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${resource.name}</td>
+            <td>${resource.location}</td>
+            <td>${resource.skill}</td>
+            <td>${resource.type}</td>
+            <td>${resource.contact}</td>
+            <td>${resource.rating}</td>
+            <td><button onclick="deleteResource(${index})">❌ Delete</button></td>
+        `;
+        resourceTableBody.appendChild(row);
+    }
+
+    resourceForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const resourceData = {
+            name: document.getElementById("resourceName").value,
+            location: document.getElementById("resourceLocation").value,
+            skill: document.getElementById("skill").value,
+            type: document.getElementById("type").value,
+            contact: document.getElementById("contact").value,
+            rating: document.getElementById("rating").value
+        };
+
+        let resources = JSON.parse(localStorage.getItem("resources")) || [];
+        resources.push(resourceData);
+        localStorage.setItem("resources", JSON.stringify(resources));
+
+        loadResources();
+        resourceForm.reset();
     });
 
-    window.deleteResource = function(index) {
-        resourcesData.splice(index, 1);
-        renderResources();
+    window.deleteResource = function (index) {
+        let resources = JSON.parse(localStorage.getItem("resources")) || [];
+        resources.splice(index, 1);
+        localStorage.setItem("resources", JSON.stringify(resources));
+        loadResources();
     };
 
-    renderResources();
+    loadResources();
 });
