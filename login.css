@@ -1,22 +1,20 @@
-/* login.css (Login Page Styles) */
+/* styles/login.css */
 body {
-    font-family: 'Arial', sans-serif;
-    background: url('../images/farm-background.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: url('assets/farm-background.jpg') no-repeat center center/cover;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
+    font-family: Arial, sans-serif;
 }
 
 .login-container {
     background: rgba(255, 255, 255, 0.9);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     text-align: center;
-    width: 300px;
 }
 
 h2 {
@@ -27,25 +25,16 @@ input {
     width: 100%;
     padding: 10px;
     margin: 10px 0;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 5px;
 }
 
-.button {
+button {
     width: 100%;
     padding: 10px;
-    background: #28a745;
+    background-color: #28a745;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-}
-
-.button:hover {
-    background: #218838;
-}
-
-#errorMessage {
-    color: red;
-    margin-top: 10px;
 }
