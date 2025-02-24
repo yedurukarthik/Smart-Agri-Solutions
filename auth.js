@@ -1,12 +1,13 @@
-// auth.js (Login & Authentication Handling)
+// scripts/auth.js (Login & Authentication Handling)
 
 document.addEventListener("DOMContentLoaded", function () {
     const loginForm = document.getElementById("loginForm");
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    // Check if the user is already logged in
+    
+    // If the user is not logged in, force them to login
     if (!localStorage.getItem("isAuthenticated")) {
-        window.location.href = "login.html"; // Redirect to login if not authenticated
+        if (window.location.pathname !== "/login.html") {
+            window.location.href = "login.html"; 
+        }
     }
 
     if (loginForm) {
@@ -25,6 +26,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+    // Logout Button Logic
+    const logoutBtn = document.getElementById("logoutBtn");
     if (logoutBtn) {
         logoutBtn.addEventListener("click", function () {
             localStorage.removeItem("isAuthenticated");
