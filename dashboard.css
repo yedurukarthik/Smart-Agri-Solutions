@@ -1,0 +1,14 @@
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: white;
+    text-align: center;
+}
+button {
+    background: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
